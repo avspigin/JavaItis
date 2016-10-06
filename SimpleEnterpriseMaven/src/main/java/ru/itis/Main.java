@@ -8,8 +8,8 @@ import ru.itis.service.SimpleUsersServiceImpl;
 public class Main {
 
     public static void main(String[] args) {
-        UsersDao usersDao = new UsersDaoFileBasedImpl("C:\\Users\\KFU-user\\Desktop\\JavaItis\\" +
-                "SimpleEnterpriseMaven\\users.txt");
+        UsersDao usersDao = new UsersDaoFileBasedImpl("C:\\Users\\Span\\Desktop\\JavaItis" +
+                "\\SimpleEnterpriseMaven\\users.txt");
 
         SimpleUsersService service = new SimpleUsersServiceImpl(usersDao);
 
