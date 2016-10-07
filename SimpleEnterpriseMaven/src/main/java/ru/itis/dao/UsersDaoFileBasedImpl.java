@@ -3,19 +3,19 @@ package ru.itis.dao;
 import com.google.common.base.Splitter;
 import ru.itis.models.User;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsersDaoFileBasedImpl implements UsersDao {
 
     private BufferedReader fileReader;
+    private BufferedWriter fileWrite = new BufferedWriter(new FileWriter("C:\\Users\\KFU-user\\Desktop\\" +
+            "JavaItis\\SimpleEnterpriseMaven\\users.txt"));
 
 
-    public UsersDaoFileBasedImpl(String fileName) { // метод выводит данные с файла.
+
+    public UsersDaoFileBasedImpl(String fileName) throws IOException { // метод выводит данные с файла.
         try {
             fileReader = new BufferedReader(new FileReader(fileName));
         } catch (FileNotFoundException e) {
@@ -39,19 +39,7 @@ public class UsersDaoFileBasedImpl implements UsersDao {
     }
 
     public User get(int userId) {
-
-        List<User> result = new ArrayList<>();
-        try {
-            String currentLine = fileReader.readLine();
-            while (currentLine != null) {
-                User currentUser = parseStringAsUser(currentLine);
-                result.add(currentUser);
-                currentLine = fileReader.readLine();
-
-            }
-        } catch (IOException e) {
-            System.out.println("SomeError");
-        }
+        List<User> result = getAll();
 
         for (User user : result) {
             if (user.getId() == userId){
@@ -63,7 +51,17 @@ public class UsersDaoFileBasedImpl implements UsersDao {
     }
 
     public void save(User user) {
+        try{
 
+            fileWrite.newLine();
+            fileWrite.write(user.getId() + " " + user.getName() + " " + user.getPassword() + " " + user.getAge());
+            fileWrite.close();
+
+        }catch(Exception e){
+
+            System.out.print(e.getMessage());
+
+        }
     }
 
     public void delete(int userId) {
