@@ -28,7 +28,9 @@ public class Main {
         UsersDao usersDao = UsersSupportFactory.getInstance().getUsersDao();
         SimpleUsersService simpleUsersService = UsersSupportFactory.getInstance().getSimpleUsers();
 
-        System.out.println(usersDao.getAll());
+//        System.out.println(usersDao.get(1).getName());
+//        usersDao.save(new User(7, "Lana", "qwer2", 34));
+        usersDao.delete(7);
 
     }
 }

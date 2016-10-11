@@ -22,6 +22,7 @@ public class UsersSupportFactory {
 
     public UsersSupportFactory() {
         try {
+            properties = new Properties();
             properties.load(new FileInputStream("C:\\Users\\Span\\Desktop\\JavaItis\\SimpleEnterpriseMaven\\src\\main\\resources\\dao.properties"));
             String userDaoClass = properties.getProperty("usersDao.class");
             String simpleUsersClass = properties.getProperty("simpleUsers.class");
