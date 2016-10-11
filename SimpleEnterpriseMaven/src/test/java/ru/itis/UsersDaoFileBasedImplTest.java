@@ -16,10 +16,33 @@ public class UsersDaoFileBasedImplTest {
 
     private UsersDaoFileBasedImpl usersDao;
 
+    @Test
+    public void get(){
+        Boolean expected = "Marsel".equals(usersDao.get(1).getName());
+        assertTrue(expected);
+    }
+
+    @Test
+    public void save(){
+        usersDao.save(new User(6, "Ivan", "qwert1", 23));
+
+        Boolean expected = "Ivan".equals(usersDao.get(6).getName());
+        assertTrue(expected);
+    }
+
+    @Test
+    public void delete(){
+        usersDao.delete(6);
+
+        Boolean expected = "Ivan".equals(usersDao.get(6).getName());
+        assertFalse(expected);
+    }
+
+
     @Before
     public void setUp() throws Exception {
-        usersDao = new UsersDaoFileBasedImpl("C:\\Users\\KFU-user\\Desktop\\" +
-                "JavaItis\\SimpleEnterpriseMaven\\users.txt");
+//        usersDao = new UsersDaoFileBasedImpl("C:\\Users\\Span\\Desktop\\JavaItis\\" +
+//                "SimpleEnterpriseMaven\\users.txt");
     }
 
     @Test
