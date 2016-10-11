@@ -12,7 +12,7 @@ public class SimpleUsersServiceImpl implements SimpleUsersService {
 
     private UsersDao usersDao;
 
-    public SimpleUsersServiceImpl(UsersDao usersDao) {
+    public SimpleUsersServiceImpl() throws InstantiationException{
         this.usersDao = usersDao;
     }
 
