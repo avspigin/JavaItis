@@ -9,7 +9,7 @@ public class Owners {
     private int age;
     private String city;
 
-    public Owners(int id, String userLogin, String fio, int age, String city) {
+    public Owners(int id, String fio, int age, String city) {
         this.id = id;
         this.fio = fio;
         this.age = age;
@@ -19,7 +19,6 @@ public class Owners {
     public int getId() {
         return id;
     }
-
 
     public String getFio() {
         return fio;
@@ -36,7 +35,6 @@ public class Owners {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public void setFio(String fio) {
         this.fio = fio;
