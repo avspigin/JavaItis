@@ -16,7 +16,6 @@ public class UsersSupportFactory {
     private static UsersSupportFactory instance;
     private Properties properties;
     private UsersDao usersDao;
-
     private SimpleUsersService simpleUsers;
 
 
