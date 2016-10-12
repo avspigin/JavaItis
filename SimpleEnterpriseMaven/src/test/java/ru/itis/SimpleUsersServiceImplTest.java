@@ -33,7 +33,7 @@ public class SimpleUsersServiceImplTest {
         // стаббинг
         when(usersDao.getAll()).thenReturn(testRegisteredUsers);
 
-        service = new SimpleUsersServiceImpl();
+//        service = new SimpleUsersServiceImpl(usersDao);
     }
 
     @Test

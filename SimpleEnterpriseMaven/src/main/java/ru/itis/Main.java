@@ -30,7 +30,8 @@ public class Main {
 
 //        System.out.println(usersDao.get(1).getName());
 //        usersDao.save(new User(7, "Lana", "qwer2", 34));
-        usersDao.get(7);
+        usersDao.get(7).getName();
+        System.out.println(usersDao.get(1).getName());
 
     }
 }
