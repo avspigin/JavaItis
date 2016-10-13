@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,9 +15,9 @@ import java.util.List;
  */
 public class OwnersDaoJdbcImpl implements OwnersDao {
 
-
+    private Owners owner;
     // language=SQL
-    private static final String SQL_SELECT_FROM_DB = "SELECT * FROM owners WHERE owner_id = ?";
+    private static final String SQL_SELECT_FROM_DB = "SELECT fio FROM owners WHERE owner_id = ?";
     // language=SQL
     private static final String SQL_SELECT_ALL_FROM_DB = "SELECT * FROM owners";
     // language=SQL
@@ -35,15 +36,31 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
 
             ResultSet result = statement.executeQuery();
             result.next();
-            return new Owners(result.getInt("owner_id"), result.getString("fio"), result.getInt("age"),
+            Owners owner = new Owners(result.getInt("owner_id"), result.getString("fio"), result.getInt("age"),
                     result.getString("city"));
         } catch (SQLException e) {
-            System.out.print("not found");
-            throw new IllegalArgumentException(e);
+            System.out.print("not found ");
         }
+        return owner;
     }
 
     public List<Owners> getAll() {
+        try {
+
+            List<Owners> list = new ArrayList<Owners>();
+            Statement statement = JdbcConnection.getInstance().getConnection().createStatement();
+
+            ResultSet result = null;
+            result = statement.executeQuery(SQL_SELECT_ALL_FROM_DB);
+           result.next();
+            while(result.next()) {
+                System.out.println(result.getInt("car_id") +
+                        " " + result.getString("car_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 

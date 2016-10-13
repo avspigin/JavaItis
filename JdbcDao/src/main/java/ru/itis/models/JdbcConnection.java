@@ -14,11 +14,8 @@ public class JdbcConnection {
 
     private static JdbcConnection instance = null;
     private static Connection connection = null;
-    private static final String URL_DB = "jdbc:postgresql://localhost:5432/Dbauto";
-    private static final String USER_NAME_DB = "postgres";
-    private static final String USER_PASSWORD_DB = "oblivion1987";
 
-    public JdbcConnection() {
+    private JdbcConnection() {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {

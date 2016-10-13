@@ -13,7 +13,7 @@ public class Main {
 
         OwnersDao ownersDao = new OwnersDaoJdbcImpl();
 
-        System.out.println(ownersDao.find(1));
+        System.out.println(ownersDao.find(2));
 
 
         /*try {

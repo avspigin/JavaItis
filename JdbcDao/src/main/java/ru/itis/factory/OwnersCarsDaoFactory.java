@@ -1,4 +1,4 @@
-package ru.itis.models;
+package ru.itis.factory;
 
 import ru.itis.dao.CarsDao;
 import ru.itis.dao.OwnersDao;
