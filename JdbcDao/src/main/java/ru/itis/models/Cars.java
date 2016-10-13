@@ -9,10 +9,20 @@ public class Cars {
     private String name;
     private int mileage;
 
+
+    private int ownerId;
+
     public Cars(int id, String name, int mileage) {
         this.id = id;
         this.name = name;
         this.mileage = mileage;
+    }
+
+    public Cars(int id, String name, int mileage, int ownerId) {
+        this.id = id;
+        this.name = name;
+        this.mileage = mileage;
+        this.ownerId = ownerId;
     }
 
     public void setId(int id) {
@@ -38,4 +48,13 @@ public class Cars {
     public int getMileage() {
         return mileage;
     }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
 }

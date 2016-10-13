@@ -16,6 +16,12 @@ public class Owners {
         this.city = city;
     }
 
+    public Owners(String fio, int age, String city) {
+        this.fio = fio;
+        this.age = age;
+        this.city = city;
+    }
+
     public int getId() {
         return id;
     }

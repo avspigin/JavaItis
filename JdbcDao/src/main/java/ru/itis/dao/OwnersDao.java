@@ -10,7 +10,7 @@ import java.util.List;
 public interface OwnersDao {
         Owners find(int id);
         List<Owners> getAll();
-        void delete(Owners owner);
+        void delete(int id);
         void update(Owners owner);
         void add(Owners owner);
 }

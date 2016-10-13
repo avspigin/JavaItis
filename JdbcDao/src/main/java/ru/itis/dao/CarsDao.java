@@ -10,7 +10,7 @@ import java.util.List;
 public interface CarsDao {
     Cars find(int id);
     List<Cars> getAll();
-    void delete(Cars car);
+    void delete(int id);
     void update(Cars car);
-    void add(int id, String name, int age, int ownerId);
+    void add(Cars car);
 }

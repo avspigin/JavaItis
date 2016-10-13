@@ -2,6 +2,16 @@ package ru.itis;
 
 import ru.itis.dao.OwnersDao;
 import ru.itis.dao.OwnersDaoJdbcImpl;
+import ru.itis.factory.ConnectionFactory;
+import ru.itis.factory.DaoFactory;
+import ru.itis.factory.ServiceFactory;
+import ru.itis.models.Owners;
+import ru.itis.services.CarService;
+import ru.itis.services.OwnerService;
+
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -11,25 +21,22 @@ public class Main {
 
     public static void main(String[] args) {
 
-        OwnersDao ownersDao = new OwnersDaoJdbcImpl();
+        OwnerService ownerService = ServiceFactory.getInstance().getOwnersService();
+        CarService carService = ServiceFactory.getInstance().getCarService();
+//        System.out.println(ownerService.findUserById(2).getFio());
+//
 
-        System.out.println(ownersDao.find(2));
+//      ownerService.updateOwner(new Owners(10, "Lera", 23, "Polis"));
 
+        ownerService.deleteOwner(10);
 
-        /*try {
-            Statement statement = JdbcConnection.getInstance().getConnection().createStatement();
-
-        ResultSet result = null;
-        result = statement.executeQuery("SELECT car_id, car_name FROM cars, " +
-                "owners WHERE owners.city = 'Казань' AND " +
-                "cars.owner_id = owners.owner_id");
-        while(result.next()) {
-            System.out.println(result.getInt("car_id") +
-                    " " + result.getString("car_name"));
+        List<Owners> ownerses = ownerService.getAllUser();
+        for(Owners owner: ownerses) {
+            System.out.println(owner.getFio() + " " + owner.getCity());
         }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+
+        System.out.println(carService.findCarById(2).getName());
+
 
     }
 }
