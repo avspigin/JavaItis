@@ -1,5 +1,7 @@
 package ru.itis.models;
 
+import com.google.common.base.MoreObjects;
+
 /**
  * Created by KFU-user on 12.10.2016.
  */
@@ -55,6 +57,16 @@ public class Cars {
 
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
+    }
+
+    @Override
+    public String toString(){
+        return MoreObjects.toStringHelper(this)
+                .add("car_id", this.id)
+                .add("car_name", this.name)
+                .add("mileage", this.mileage)
+                .add("owner_id", this.ownerId)
+                .toString();
     }
 
 }

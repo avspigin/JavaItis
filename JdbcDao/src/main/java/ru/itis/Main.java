@@ -28,14 +28,14 @@ public class Main {
 
 //      ownerService.updateOwner(new Owners(10, "Lera", 23, "Polis"));
 
-        ownerService.deleteOwner(10);
+//        ownerService.deleteOwner(10);
 
         List<Owners> ownerses = ownerService.getAllUser();
         for(Owners owner: ownerses) {
-            System.out.println(owner.getFio() + " " + owner.getCity());
+            System.out.println(owner);
         }
 
-        System.out.println(carService.findCarById(2).getName());
+//        System.out.println(carService.findCarById(2).getName());
 
 
     }

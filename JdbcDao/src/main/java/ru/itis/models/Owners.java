@@ -1,5 +1,7 @@
 package ru.itis.models;
 
+import com.google.common.base.MoreObjects;
+
 /**
  * Created by KFU-user on 12.10.2016.
  */
@@ -52,5 +54,15 @@ public class Owners {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    @Override
+    public String toString(){
+        return MoreObjects.toStringHelper(this)
+                .add("owner_id", this.id)
+                .add("fio", this.fio)
+                .add("age", this.age)
+                .add("city", this.city)
+                .toString();
     }
 }
