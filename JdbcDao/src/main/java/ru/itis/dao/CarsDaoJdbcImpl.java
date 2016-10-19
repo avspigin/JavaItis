@@ -24,9 +24,9 @@ public class CarsDaoJdbcImpl implements CarsDao {
     // language=SQL
     private static final String SQL_DELETE_FROM_DB_CARS = "DELETE FROM cars WHERE car_id = ?";
     // language=SQL
-    private static final String SQL_UPDATE_DB = "UPDATE cars SET car_name = ?, mileage = ?, owner_id = ? WHERE car_id = ?";
+    private static final String SQL_UPDATE_DB = "UPDATE cars SET car_name = ?, mileage = ? WHERE car_id = ?";
     // language=SQL
-    private static final String SQL_ADD_TO_DB = "INSERT INTO cars (car_name, mileage, owner_id) VALUES (?, ?, ?);";
+    private static final String SQL_ADD_TO_DB = "INSERT INTO cars (car_name, mileage) VALUES (?, ?);";
 
     public CarsDaoJdbcImpl(Connection connection) {
         this.connection = connection;
@@ -40,8 +40,7 @@ public class CarsDaoJdbcImpl implements CarsDao {
 
             ResultSet result = statement.executeQuery();
             result.next();
-            return new Cars(result.getInt("car_id"), result.getString("car_name"), result.getInt("mileage"),
-                    result.getInt("owner_id"));
+            return new Cars(result.getInt("car_id"), result.getString("car_name"), result.getInt("mileage"));
 
         } catch (SQLException e) {
             System.out.print("Id not found!");
@@ -58,8 +57,7 @@ public class CarsDaoJdbcImpl implements CarsDao {
             ResultSet result = statement.executeQuery();
             result.next();
             while(result.next()) {
-                list.add(new Cars(result.getInt("car_id"), result.getString("car_name"), result.getInt("mileage"),
-                        result.getInt("owner_id")));
+                list.add(new Cars(result.getInt("car_id"), result.getString("car_name"), result.getInt("mileage")));
             }
 
             return list;
@@ -85,10 +83,9 @@ public class CarsDaoJdbcImpl implements CarsDao {
 
             this.car  = car;
             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_DB);
-            statement.setInt(4, car.getId());
+            statement.setInt(3, car.getId());
             statement.setString(1, car.getName());
             statement.setInt(2, car.getMileage());
-            statement.setInt(3, car.getOwnerId());
             System.out.println("Updated!");
             statement.execute();
 
@@ -104,7 +101,6 @@ public class CarsDaoJdbcImpl implements CarsDao {
             PreparedStatement statement = connection.prepareStatement(SQL_ADD_TO_DB);
             statement.setString(1, car.getName());
             statement.setInt(2, car.getMileage());
-            statement.setInt(3, car.getOwnerId());
             statement.execute();
             System.out.println("Added!");
 

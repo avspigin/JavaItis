@@ -12,7 +12,6 @@ public class Cars {
     private int mileage;
 
 
-    private int ownerId;
 
     public Cars(int id, String name, int mileage) {
         this.id = id;
@@ -20,12 +19,6 @@ public class Cars {
         this.mileage = mileage;
     }
 
-    public Cars(int id, String name, int mileage, int ownerId) {
-        this.id = id;
-        this.name = name;
-        this.mileage = mileage;
-        this.ownerId = ownerId;
-    }
 
     public void setId(int id) {
         this.id = id;
@@ -51,13 +44,7 @@ public class Cars {
         return mileage;
     }
 
-    public int getOwnerId() {
-        return ownerId;
-    }
 
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
 
     @Override
     public String toString(){
@@ -65,7 +52,6 @@ public class Cars {
                 .add("car_id", this.id)
                 .add("car_name", this.name)
                 .add("mileage", this.mileage)
-                .add("owner_id", this.ownerId)
                 .toString();
     }
 
