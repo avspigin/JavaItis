@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 select owners.fio, owners.city, cars.car_name 
 from owners, cars, cars_owners_link
 where (owners.city = 'Êàçàíü')
+=======
+ï»¿select owners.fio, owners.city, cars.car_name 
+from owners, cars, cars_owners_link
+where (owners.city = 'ÐšÐ°Ð·Ð°Ð½ÑŒ')
+>>>>>>> a07149e7e0cc46bb32643c923cdc7c576f3fae8e
 and (owners.owner_id=cars_owners_link.owner_id) and (cars.car_id=cars_owners_link.car_id);
 
 select * from owners, cars, car_owner_link

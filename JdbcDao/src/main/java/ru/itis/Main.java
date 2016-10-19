@@ -33,6 +33,7 @@ public class Main {
             System.out.println(owner);
         }
 
+<<<<<<< HEAD
         System.out.println("=============================================================");
 
         List<Cars> cars = carService.getAllCars();
@@ -41,6 +42,9 @@ public class Main {
         }
 
 //        System.out.println(carService.findCarById(2).getName());
+=======
+        System.out.println(carService.findCarById(2));
+>>>>>>> a07149e7e0cc46bb32643c923cdc7c576f3fae8e
 
 
     }
