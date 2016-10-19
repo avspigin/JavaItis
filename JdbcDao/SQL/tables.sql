@@ -13,7 +13,6 @@ create table cars (
 );
 
 create table cars_owners_link (
-	car_id integer not null,
-	owner_id integer not null,
-	primary key(car_id, owner_id)
+	car_id integer references cars(car_id),
+	owner_id integer references owners(owner_id)
 ); 

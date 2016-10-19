@@ -35,7 +35,7 @@ public class Main {
             System.out.println(owner);
         }
 
-//        System.out.println(carService.findCarById(2).getName());
+        System.out.println(carService.findCarById(2));
 
 
     }
