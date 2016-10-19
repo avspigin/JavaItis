@@ -25,6 +25,8 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
     private static final String SQL_UPDATE_DB = "UPDATE owners SET fio = ?, age = ?, city = ? WHERE owner_id = ?";
     // language=SQL
     private static final String SQL_ADD_TO_DB = "INSERT INTO owners (fio, age, city) VALUES (?, ?, ?);";
+    // language=SQL
+    private static final String SQL_SELECT_COPLE_ALL = "SELECT owners_id, fio, age, city, car_name, mileage FROM owners, cars WHERE owners.owner_id=cars.owner_id;";
 
     public OwnersDaoJdbcImpl(Connection connection) {
         this.connection = connection;
@@ -64,6 +66,10 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
         } catch (SQLException e) {
             throw new IllegalArgumentException(e);
         }
+    }
+
+    public void coupleOwnersCars(){
+
     }
 
     public void delete(int id) {

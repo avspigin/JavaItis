@@ -22,11 +22,12 @@ public class DaoFactory {
     private DaoFactory() {
         this.properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\dao.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Span\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\dao.properties"));
 
-            Class classOwners = Class.forName(properties.getProperty("ownersDao.class"));
-            Constructor constructorOwners = classOwners.getConstructor(Connection.class);
-            ownersDao = (OwnersDao) constructorOwners.newInstance(ConnectionFactory.getInstance().getConnection());
+            Class classOwners = Class.forName(properties.getProperty("ownersDao.class")); //получаем имя класса
+            Constructor constructorOwners = classOwners.getConstructor(Connection.class); //получаем конструктор класса с параметром типа Connection
+            ownersDao = (OwnersDao) constructorOwners.newInstance(ConnectionFactory.getInstance().getConnection()); //получаем экземпляр класса,
+            // с вложенным аргументом, connection. В данный момент это установки единственного объекта соединения с бд.
 
             Class classCars = Class.forName(properties.getProperty("carsDao.class"));
             Constructor constructorCars = classCars.getConstructor(Connection.class);

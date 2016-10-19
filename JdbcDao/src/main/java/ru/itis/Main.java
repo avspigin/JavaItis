@@ -1,10 +1,8 @@
 package ru.itis;
 
-import ru.itis.dao.OwnersDao;
-import ru.itis.dao.OwnersDaoJdbcImpl;
-import ru.itis.factory.ConnectionFactory;
-import ru.itis.factory.DaoFactory;
+
 import ru.itis.factory.ServiceFactory;
+import ru.itis.models.Cars;
 import ru.itis.models.Owners;
 import ru.itis.services.CarService;
 import ru.itis.services.OwnerService;
@@ -33,6 +31,13 @@ public class Main {
         List<Owners> ownerses = ownerService.getAllUser();
         for(Owners owner: ownerses) {
             System.out.println(owner);
+        }
+
+        System.out.println("=============================================================");
+
+        List<Cars> cars = carService.getAllCars();
+        for(Cars currentCar: cars){
+            System.out.println(currentCar);
         }
 
 //        System.out.println(carService.findCarById(2).getName());
