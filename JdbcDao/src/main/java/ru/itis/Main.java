@@ -28,8 +28,8 @@ public class Main {
 
 //        ownerService.deleteOwner(10);
 
-        List<Owners> ownerses = ownerService.getAllUser();
-        for(Owners owner: ownerses) {
+        List<Owners> owners = ownerService.getAllUser();
+        for(Owners owner: owners) {
             System.out.println(owner);
         }
 
@@ -42,7 +42,7 @@ public class Main {
 
 //        System.out.println(carService.findCarById(2).getName());
 
-        System.out.println(carService.findCarById(2));
+        System.out.println(carService.findCarById(12));
 
 
 

@@ -7,12 +7,19 @@
 
     <servlet>
         <servlet-name>MyServlet</servlet-name>
-        <servlet-class>ru.itis.Servlet</servlet-class>
+        <servlet-class>ru.itis.servlet.Servlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri></taglib-uri>
+            <taglib-location>/WEB-INF/UsersTag.tld</taglib-location>
+        </taglib>
+    </jsp-config>
 
 </web-app>
