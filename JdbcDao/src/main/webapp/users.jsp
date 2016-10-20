@@ -9,16 +9,32 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Собственники</title>
+    <title>Owners!</title>
 </head>
 <body>
 <h1>
-    <c:forEach items="${requestScope.myUsers}" var="currentUser">
+    Список собственников
+</h1>
+<p>
+    <c:forEach items="${requestScope.myOwners}" var="currentUser">
         <tr>
-            <td><c:out value="${currentUser.name}" /><td>
-            <td><c:out value="${currentUser.age}" /><td>
+            <td><c:out value="${currentUser}" /><td>
+            <br>
+                <%--<td><c:out value="${currentUser.age}" /><td>--%>
         </tr>
     </c:forEach>
-</h1>
+</p>
+
+<h2>
+    Форма для добавления нового владельца
+</h2>
+
+<form action="users" method="post">
+    Name: <input type="text" name="name">
+    Age: <input type="text" name="age">
+    City: <input type="text" name="city">
+    <input type="submit" value="Add">
+    <span class="error">${error}</span>
+</form>
 </body>
 </html>

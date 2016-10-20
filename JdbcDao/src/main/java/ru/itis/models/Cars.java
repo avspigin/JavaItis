@@ -49,9 +49,9 @@ public class Cars {
     @Override
     public String toString(){
         return MoreObjects.toStringHelper(this)
-                .add("car_id", this.id)
-                .add("car_name", this.name)
-                .add("mileage", this.mileage)
+                .add("  car_id", this.id)
+                .add("  car_name", this.name)
+                .add("  mileage", this.mileage)
                 .toString();
     }
 

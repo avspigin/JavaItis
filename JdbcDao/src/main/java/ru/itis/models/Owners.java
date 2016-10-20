@@ -59,10 +59,10 @@ public class Owners {
     @Override
     public String toString(){
         return MoreObjects.toStringHelper(this)
-                .add("owner_id", this.id)
-                .add("fio", this.fio)
-                .add("age", this.age)
-                .add("city", this.city)
+                .add("  owner_id", this.id)
+                .add("  fio", this.fio)
+                .add("  age", this.age)
+                .add("  city", this.city)
                 .toString();
     }
 }

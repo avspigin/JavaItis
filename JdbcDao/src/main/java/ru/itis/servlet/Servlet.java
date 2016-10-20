@@ -36,13 +36,38 @@ public class Servlet extends HttpServlet {
 
 
         List<Owners> owners = ownerService.getAllUser();
-        PrintWriter out = response.getWriter();
+
+        request.setAttribute("myOwners", owners);
+        getServletContext().getRequestDispatcher("/users.jsp").forward(request, response);
+
+
+        /*PrintWriter out = response.getWriter();
         for(Owners owner: owners) {
             out.println("<p>" + owner + "</p>");
-        }
+        }*/
 
         /*String message = request.getParameterValues("message")[0];
         PrintWriter out = response.getWriter();
         out.println("<h1>" + message + "</h1>");*/
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String fio = request.getParameter("name");
+        int age = Integer.parseInt(request.getParameter("age"));
+        String city = request.getParameter("city");
+        Owners owner = new Owners(fio, age, city);
+        ownerService.addOwner(owner);
+
+        if (owner != null) {
+            request.getSession().setAttribute("myOwners", owner);
+            response.sendRedirect("users");
+        }
+        else {
+            request.setAttribute("error", "Unknown user, please try again");
+            request.getRequestDispatcher("/users.jsp").forward(request, response);
+        }
     }
 }

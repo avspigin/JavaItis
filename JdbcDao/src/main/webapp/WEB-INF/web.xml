@@ -15,11 +15,11 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
-    <jsp-config>
+    <!--<jsp-config>
         <taglib>
             <taglib-uri></taglib-uri>
             <taglib-location>/WEB-INF/UsersTag.tld</taglib-location>
         </taglib>
-    </jsp-config>
+    </jsp-config>-->
 
 </web-app>
