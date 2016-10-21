@@ -54,6 +54,7 @@ public class Servlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
 
         String fio = request.getParameter("name");
         int age = Integer.parseInt(request.getParameter("age"));

@@ -22,7 +22,7 @@ public class DaoFactory {
     private DaoFactory() {
         this.properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\Span\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\dao.properties"));
+            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\dao.properties"));
 
             Class classOwners = Class.forName(properties.getProperty("ownersDao.class")); //получаем имя класса
             Constructor constructorOwners = classOwners.getConstructor(Connection.class); //получаем конструктор класса с параметром типа Connection

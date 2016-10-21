@@ -18,7 +18,7 @@ public class ConnectionFactory {
     private ConnectionFactory(){
         this.properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\Span\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\connection.properties"));
+            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\connection.properties"));
             String URL = properties.getProperty("jdbc.url");
             String login = properties.getProperty("jdbc.login");
             String password = properties.getProperty("jdbc.password");
