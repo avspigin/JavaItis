@@ -35,6 +35,7 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
     public Owners find(int id) {
 
         try {
+            
             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_FROM_DB);
             statement.setInt(1, id);
 
@@ -52,6 +53,7 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
 
     public List<Owners> getAll() {
         try {
+            
             List<Owners> list = new ArrayList<Owners>();
             PreparedStatement statement = connection.prepareStatement(SQL_SELECT_ALL_FROM_DB);
 
@@ -74,6 +76,7 @@ public class OwnersDaoJdbcImpl implements OwnersDao {
 
     public void delete(int id) {
         try {
+            
             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_FROM_DB);
             statement.setInt(1, id);
             System.out.println("Deleted!");

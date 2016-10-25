@@ -23,7 +23,7 @@ public class ServiceFactory {
     private ServiceFactory() {
         this.properties = new Properties();
         try {
-            properties.load(new FileInputStream("C:\\Users\\KFU-user\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\service.properties"));
+            properties.load(new FileInputStream("C:\\Users\\Span\\Desktop\\JavaItis\\JdbcDao\\src\\main\\resources\\service.properties"));
 
             Class clazzOwnerService = Class.forName(properties.getProperty("ownerService.class"));
             Constructor constructorOwner = clazzOwnerService.getConstructor(OwnersDao.class);
