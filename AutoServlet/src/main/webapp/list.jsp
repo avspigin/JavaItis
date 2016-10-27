@@ -22,7 +22,6 @@
         <th>Mileage</th>
     </tr>
 
-
     <c:forEach items="${requestScope.ownersForJsp}" var="currentUser">
     <tr>
         <td><c:out value="${currentUser.userId}" /></td>

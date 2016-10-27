@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             }
         }
         Cookie cookie = new Cookie("token", currentToken);
-        cookie.setMaxAge(600);
+        cookie.setMaxAge(2000);
         response.addCookie(cookie);
         if (currentToken != null) {
             response.sendRedirect("/list");
