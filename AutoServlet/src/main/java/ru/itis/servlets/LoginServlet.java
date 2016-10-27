@@ -1,6 +1,7 @@
 package ru.itis.servlets;
 
-import ru.itis.factory.ServiceFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.models.Owners;
 import ru.itis.services.OwnerService;
 import ru.itis.utils.PasswordCache;
@@ -28,7 +29,8 @@ public class LoginServlet extends HttpServlet {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        ownerService = ServiceFactory.getInstance().getOwnerService();
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context.xml");
+        ownerService = (OwnerService) applicationContext.getBean("ownerService");
     }
 
     @Override

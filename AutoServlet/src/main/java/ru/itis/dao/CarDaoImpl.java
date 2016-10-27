@@ -2,10 +2,8 @@ package ru.itis.dao;
 
 import ru.itis.models.Cars;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +26,12 @@ public class CarDaoImpl implements CarDao {
     //language=SQL
     private static final String SQL_ADD_CAR = "INSERT INTO cars (car_name, mileage, user_id) VALUES (?, ?, ?)";
 
-    public CarDaoImpl(Connection connection) {
-        this.connection = connection;
+    public CarDaoImpl(DataSource dataSource) {
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public Cars getCar(int carId) {

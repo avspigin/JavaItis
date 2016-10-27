@@ -12,7 +12,10 @@
 </head>
 <body>
 <h2>Форма для добавления авто</h2>
-<form action="addAuto" method="post">
+
+<script src="scripts/windowError.js"></script>
+
+<form action="addAuto" method="post" name="Form">
     <table border="0">
         <tr>
         <td>Model: </td><td><input type="text" name="name"></td>
@@ -22,7 +25,7 @@
         </tr>
     </table>
     <br>
-    <input type="submit" value="Add">
+    <input type="submit" value="Add" onclick="validateFormAddAuto()">
     <span class="error">${error}</span>
 </form>
 

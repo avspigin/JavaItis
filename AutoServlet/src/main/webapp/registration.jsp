@@ -9,11 +9,15 @@
 <html>
 <head>
     <title>Registration page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=unicode"/>
+    <meta content="CoffeeCup HTML Editor (www.coffeecup.com)" name="generator"/>
 </head>
 <body>
 <h2>Регистрация</h2>
 
-<form action="registration" method="post">
+<script src="scripts/windowError.js"></script>
+
+<form action="" method="post" name="Form">
     <table border="0">
     <tr>
         <td>Login: </td><td><input type="text" name="login"></td>
@@ -25,7 +29,7 @@
         <td>FIO: </td><td><input type="text" name="fio"></td>
     </table>
     <br>
-    <input type="submit" value="Registration">
+    <input type="submit" value="Registration" onclick="validateFormRegistration()">
     <span class="error">${error}</span>
 </form>
 

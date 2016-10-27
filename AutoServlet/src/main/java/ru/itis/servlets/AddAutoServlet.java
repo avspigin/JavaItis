@@ -1,6 +1,7 @@
 package ru.itis.servlets;
 
-import ru.itis.factory.ServiceFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.models.Cars;
 import ru.itis.models.Owners;
 import ru.itis.services.CarService;
@@ -30,8 +31,9 @@ public class AddAutoServlet extends HttpServlet {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        ownerService = ServiceFactory.getInstance().getOwnerService();
-        carService = ServiceFactory.getInstance().getCarService();
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context.xml");
+        ownerService = (OwnerService) applicationContext.getBean("ownerService");
+        carService = (CarService) applicationContext.getBean("carService");
     }
 
     @Override
@@ -45,21 +47,36 @@ public class AddAutoServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
+
+        boolean empty = false;
+
         request.setCharacterEncoding("UTF-8");
+
         Cookie cookie[] = request.getCookies();
+
         if (cookie != null) {
             for (int i = cookie.length - 1; i > 0; i--) {
                 List<Owners> list = ownerService.getAllUsers();
                 for (Owners currentOwner : list) {
                     if (cookie[i].getValue().equals(currentOwner.getToken())) {
                         String name = request.getParameter("name");
-                        int mileage = Integer.parseInt(request.getParameter("mileage"));
-                        carService.addCar(new Cars(name, mileage, currentOwner.getUserId()));
-                        break;
+                        String mileageString = request.getParameter("mileage");
+                        if (name.equals("") || mileageString.equals("")){
+                            empty = true;
+                        } else {
+                            empty = false;
+                            int mileage = Integer.parseInt(mileageString);
+                            carService.addCar(new Cars(name, mileage, currentOwner.getUserId()));
+                        }
                     }
                 }
             }
         }
-        response.sendRedirect("/list");
+
+        if (empty){
+            response.sendRedirect("/addAuto");
+        }else {
+            response.sendRedirect("/list");
+        }
     }
 }

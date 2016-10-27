@@ -1,14 +1,10 @@
 package ru.itis.dao;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import ru.itis.models.Owners;
 import ru.itis.utils.PasswordCache;
-import ru.itis.utils.RandomString;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,8 +29,12 @@ public class OwnerDaoImpl implements OwnerDao {
     //language=SQL
     private static final String SQL_SET_TOKEN = "UPDATE owners SET token = ? WHERE user_id = ?";
 
-    public OwnerDaoImpl(Connection connection){
-        this.connection = connection;
+    public OwnerDaoImpl(DataSource dataSource){
+        try {
+            this.connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setToken(Owners owner){

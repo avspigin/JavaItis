@@ -13,6 +13,19 @@
 <body>
 <h2>Авторизация</h2>
 
+<script type="text/javascript">
+    function validateForm()
+    {
+        var a=document.forms["Form"]["login"].value;
+        var b=document.forms["Form"]["password"].value;
+        if (a==null || a=="",b==null || b=="")
+        {
+            alert("Логин и пароль не совпадают");
+            return false;
+        }
+    }
+</script>
+
 <form action="login" method="post">
     <table border="0">
         <tr>

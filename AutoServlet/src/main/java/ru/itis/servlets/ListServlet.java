@@ -1,6 +1,7 @@
 package ru.itis.servlets;
 
-import ru.itis.factory.ServiceFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.models.Cars;
 import ru.itis.models.Owners;
 import ru.itis.services.CarService;
@@ -26,8 +27,9 @@ public class ListServlet extends HttpServlet {
         } catch (ServletException e) {
             e.printStackTrace();
         }
-        ownerService = ServiceFactory.getInstance().getOwnerService();
-        carService = ServiceFactory.getInstance().getCarService();
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context.xml");
+        ownerService = (OwnerService) applicationContext.getBean("ownerService");
+        carService = (CarService) applicationContext.getBean("carService");
     }
 
     @Override

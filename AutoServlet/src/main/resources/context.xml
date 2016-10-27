@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/DbAutoTwo"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="oblivion1987"/>
+    </bean>
+
+    <context:component-scan base-package="ru.itis" />
+    <tx:annotation-driven transaction-manager="txManager"/>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="ownerDao" class="ru.itis.dao.OwnerDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="carDao" class="ru.itis.dao.CarDaoImpl">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="ownerService" class="ru.itis.services.OwnerServiceImpl">
+        <constructor-arg ref="ownerDao"/>
+    </bean>
+
+    <bean id="carService" class="ru.itis.services.CarServiceImpl">
+        <constructor-arg ref="carDao"/>
+    </bean>
+
+</beans>
