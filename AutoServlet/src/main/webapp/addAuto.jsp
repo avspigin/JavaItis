@@ -26,23 +26,44 @@
         </tr>
     </table>
     <br>
-    <input type="submit" value="Add" onclick="validateFormAddAuto()">
+    <input type="submit" value="Add" onclick="validateFormAddAuto()" id = example-3>
 </form>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
 
-    $(document).ready(function() {
+    $(document).ready(function(){                          // по завершению загрузки страницы
+        $('#example-3').click(function(){                  // вешаем на клик по элементу с id = example-3
+            // загрузку XML из файла example.xml
+                $('#example-3').html('');
+                $(xml).find('note').each(function(){       // заполняем DOM элемент данными из XML
+                    $('#example-3').append('To: '   + $(this).find('to').text() + '<br/>')
+                            .append('From: ' + $(this).find('from').text() + '<br/>')
+                            .append('<b>'    + $(this).find('heading').text() + '</b><br/>')
+                            .append(           $(this).find('body').text() + '<br/>');
+                });
+                                                 // указываем явно тип данных
+        })
+    });
+
+
+
+    /*$(document).ready(function() {
         $.ajax({
-            url: '/ajax/example.html',             // указываем URL и
-            dataType: "json",                     // тип загружаемых данных
+            url: 'registration.jsp',             // указываем URL и
+            dataType: "jsp",                     // тип загружаемых данных
             success: function (data, textStatus) { // вешаем свой обработчик на функцию success
                 $.each(data, function (i, val) {    // обрабатываем полученные данные
 
                 });
             }
         });
-    });
+    });*/
 </script>
+
+<p>
+<td><c:out value="${requestScope.owner}" /></td>
+    <br/>
+</p>
 
 <table border="1">
     <tr>
@@ -56,10 +77,10 @@
     <%--<c: items="${requestScope.owner}" var="currentUser">--%>
         <tr>
         <td><c:out value="${requestScope.owner.userId}" /></td>
-        <td><c:out value="${currentUser.userLogin}" /></td>
-        <td><c:out value="${currentUser.userFio}" /></td>
+        <td><c:out value="${requestScope.owner.userLogin}" /></td>
+        <td><c:out value="${requestScope.owner.userFio}" /></td>
         <c:forEach items="${requestScope.carsForJsp}" var="currentCar">
-            <c:if test="${currentUser.userId == currentCar.userId}">
+            <c:if test="${requestScope.owner.userId == currentCar.userId}">
                 <td><c:out value="${currentCar.carName}" /></td>
                 <td><c:out value="${currentCar.carMileage}" /></td>
                 </tr>

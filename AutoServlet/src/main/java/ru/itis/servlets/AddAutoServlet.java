@@ -23,7 +23,6 @@ public class AddAutoServlet extends HttpServlet {
     private OwnerService ownerService;
     private CarService carService;
     private Owners owner;
-    private Cars car;
 
     @Override
     public void init(){
@@ -44,8 +43,20 @@ public class AddAutoServlet extends HttpServlet {
 
         response.setContentType("text/html; charset=UTF-8");
 
-        List<Owners> owners = ownerService.getAllUsers();
         List<Cars> cars = carService.getAllCars();
+
+        Cookie cookie[] = request.getCookies();
+
+        if (cookie != null) {
+            for (int i = cookie.length - 1; i > 0; i--) {
+                List<Owners> list = ownerService.getAllUsers();
+                for (Owners currentOwner : list) {
+                    if (cookie[i].getValue().equals(currentOwner.getToken())) {
+                        owner = currentOwner;
+                    }
+                }
+            }
+        }
 
         request.setAttribute("owner", owner);
         request.setAttribute("carsForJsp", cars);
@@ -57,38 +68,15 @@ public class AddAutoServlet extends HttpServlet {
     public void doPost(HttpServletRequest request,
                        HttpServletResponse response) throws ServletException, IOException {
 
-        boolean empty = false;
-
         request.setCharacterEncoding("UTF-8");
 
-        Cookie cookie[] = request.getCookies();
-
-        if (cookie != null) {
-            for (int i = cookie.length - 1; i > 0; i--) {
-                List<Owners> list = ownerService.getAllUsers();
-                for (Owners currentOwner : list) {
-                    if (cookie[i].getValue().equals(currentOwner.getToken())) {
-                        owner = currentOwner;
-                        String name = request.getParameter("name");
-                        String mileageString = request.getParameter("mileage");
-                        if (name.equals("") || mileageString.equals("")){
-                            empty = true;
-                        } else {
-                            empty = false;
-                            int mileage = Integer.parseInt(mileageString);
-                            carService.addCar(new Cars(name, mileage, owner.getUserId()));
-                        }
-                    }
-                }
-            }
+        String name = request.getParameter("name");
+        String mileageString = request.getParameter("mileage");
+        if (!name.equals("") || !mileageString.equals("")){
+            int mileage = Integer.parseInt(mileageString);
+            carService.addCar(new Cars(name, mileage, owner.getUserId()));
         }
 
-        List<Cars> list1 = carService.getAllCars();
-        for (Cars currentCar: list1){
-            if (currentCar.getUserId() == owner.getUserId()){
-                car = currentCar;
-            }
-        }
         response.sendRedirect("/addAuto");
 //        if (empty){
 //        }else {

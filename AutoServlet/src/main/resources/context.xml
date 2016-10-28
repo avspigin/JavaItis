@@ -17,12 +17,12 @@
         <property name="password" value="1"/>
     </bean>
 
-    <context:component-scan base-package="ru.itis" />
-    <tx:annotation-driven transaction-manager="txManager"/>
+    <!--<context:component-scan base-package="ru.itis" />-->
+    <!--<tx:annotation-driven transaction-manager="txManager"/>-->
 
-    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <!--<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+    <!--</bean>-->
 
     <bean id="ownerDao" class="ru.itis.dao.OwnerDaoImpl">
         <constructor-arg ref="dataSource"/>

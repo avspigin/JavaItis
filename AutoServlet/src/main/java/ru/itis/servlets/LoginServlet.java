@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public class LoginServlet extends HttpServlet {
 
     private OwnerService ownerService;
-//    private String currentToken = null;
+    private static Logger log = Logger.getLogger(RegistrationServlet.class.getName());
 
     @Override
     public void init(){
@@ -29,8 +30,10 @@ public class LoginServlet extends HttpServlet {
         } catch (ServletException e) {
             e.printStackTrace();
         }
+
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context.xml");
         ownerService = (OwnerService) applicationContext.getBean("ownerService");
+        log.info("userDao RegistrationServlet initiation");
     }
 
     @Override
