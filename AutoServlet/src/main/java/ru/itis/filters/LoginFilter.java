@@ -1,6 +1,5 @@
 package ru.itis.filters;
 
-import javafx.application.Application;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.itis.models.Owners;

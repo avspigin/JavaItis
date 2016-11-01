@@ -1,135 +1,112 @@
 package ru.itis.dao;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import ru.itis.models.Owners;
 import ru.itis.utils.PasswordCache;
 
-import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Span on 23.10.2016.
  */
 public class OwnerDaoImpl implements OwnerDao {
-    private Connection connection;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 //    Owners owner;
 
     //language=SQL
-    private static final String SQL_GET_OWNER = "SELECT * FROM owners WHERE user_id = ?";
+    private static final String SQL_GET_OWNER = "SELECT * FROM owners WHERE user_id = :user_id";
     //language=SQL
     private static final String SQL_GET_ALL_OWNER = "SELECT * FROM owners";
     //language=SQL
-    private static final String SQL_UPDATE_OWNER = "UPDATE owners SET user_login = ?, " +
-            "user_password = ?, fio = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_OWNER = "UPDATE owners SET user_login = :user_login, " +
+            "user_password = :user_password, fio = :fio WHERE user_id = :user_id";
     //language=SQL
-    private static final String SQL_DELETE_OWNER = "DELETE FROM owners WHERE user_id = ?";
+    private static final String SQL_DELETE_OWNER = "DELETE FROM owners WHERE user_id = :user_id";
     //language=SQL
-    private static final String SQL_ADD_OWNER = "INSERT INTO owners (user_login, user_password, fio) VALUES (?, ?, ?)";
+    private static final String SQL_ADD_OWNER = "INSERT INTO owners (user_login, user_password, fio) VALUES (:user_login, :user_password, :fio)";
     //language=SQL
-    private static final String SQL_SET_TOKEN = "UPDATE owners SET token = ? WHERE user_id = ?";
+    private static final String SQL_SET_TOKEN = "UPDATE owners SET token = :token WHERE user_id = :user_id";
 
-    public OwnerDaoImpl(DataSource dataSource){
-        try {
-            this.connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public OwnerDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public void setToken(Owners owner){
-        try {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_SET_TOKEN);
+        paramsMap.put("user_id", owner.getUserId());
+        paramsMap.put("token", owner.getToken());
 
-            statement.setInt(2, owner.getUserId());
-            statement.setString(1, owner.getToken());
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        namedParameterJdbcTemplate.update(SQL_SET_TOKEN, paramsMap);
     }
 
     public Owners getOwner(int userId) {
-        try {
+        Map<String, Integer> paramsMap = new HashMap<String, Integer>();
+        paramsMap.put("user_id", userId);
 
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_OWNER);
-            statement.setInt(1, userId);
-            ResultSet result = statement.executeQuery();
-            result.next();
-            return new Owners(result.getInt("user_id"), result.getString("user_login"),
-                    result.getString("user_password"), result.getString("fio"), result.getString("token"));
+        return namedParameterJdbcTemplate.queryForObject(SQL_GET_OWNER, paramsMap, new RowMapper<Owners>(){
 
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+            public Owners mapRow(ResultSet resultSet, int rowNum) throws SQLException{
+
+                return new Owners(resultSet.getInt("user_id"),
+                        resultSet.getString("user_login"),
+                        resultSet.getString("user_password"),
+                        resultSet.getString("fio"),
+                        resultSet.getString("token"));
+            }
+
+        });
     }
 
     public List<Owners> getAllOwners() {
-        List<Owners> list = new ArrayList<Owners>();
-        try {
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_OWNER);
+        return namedParameterJdbcTemplate.query(SQL_GET_ALL_OWNER, new RowMapper<Owners>() {
 
-            ResultSet result = statement.executeQuery();
-//            result.next();
-            while (result.next()) {
-                list.add(new Owners(result.getInt("user_id"), result.getString("user_login"),
-                        result.getString("user_password"), result.getString("fio"), result.getString("token")));
+            public Owners mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+
+                return new Owners(resultSet.getInt("user_id"),
+                        resultSet.getString("user_login"),
+                        resultSet.getString("user_password"),
+                        resultSet.getString("fio"),
+                        resultSet.getString("token"));
             }
 
-            return list;
-
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        });
     }
 
     public void addOwner(Owners owner) {
-        try {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_OWNER);
+        String ownerPassword = PasswordCache.getCache(owner.getUserPassword()); //шифрование пароля
+        paramsMap.put("user_login", owner.getUserLogin());
+        paramsMap.put("user_password", ownerPassword);
+        paramsMap.put("fio", owner.getUserFio());
 
-            String ownerPassword = PasswordCache.getCache(owner.getUserPassword()); //шифрование пароля)
-
-            statement.setString(1, owner.getUserLogin());
-            statement.setString(2, ownerPassword);
-            statement.setString(3, owner.getUserFio());
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
-
+        namedParameterJdbcTemplate.update(SQL_ADD_OWNER, paramsMap);
     }
 
     public void updateOwner(Owners owner) {
-        try {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_OWNER);
+        String ownerPassword = PasswordCache.getCache(owner.getUserPassword()); //шифрование пароля)
+        paramsMap.put("user_id", owner.getUserId());
+        paramsMap.put("user_login", owner.getUserLogin());
+        paramsMap.put("user_password", ownerPassword);
+        paramsMap.put("fio", owner.getUserFio());
 
-            String ownerPassword = PasswordCache.getCache(owner.getUserPassword()); //шифрование пароля)
+        namedParameterJdbcTemplate.update(SQL_UPDATE_OWNER, paramsMap);
 
-            statement.setInt(4, owner.getUserId());
-            statement.setString(1, owner.getUserLogin());
-            statement.setString(2, ownerPassword);
-            statement.setString(3, owner.getUserFio());
-            statement.execute();
-
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
     }
 
     public void deleteOwner(int userId) {
-        try {
+        Map<String, Integer> paramsMap = new HashMap<String, Integer>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_OWNER);
-            statement.setInt(1, userId);
-            statement.execute();
+        paramsMap.put("user_id", userId);
 
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        namedParameterJdbcTemplate.update(SQL_DELETE_OWNER, paramsMap);
     }
 }

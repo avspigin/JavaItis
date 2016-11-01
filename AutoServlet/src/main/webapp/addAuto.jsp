@@ -29,35 +29,39 @@
     <input type="submit" value="Add" onclick="validateFormAddAuto()" id = example-3>
 </form>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-
-    $(document).ready(function(){                          // по завершению загрузки страницы
-        $('#example-3').click(function(){                  // вешаем на клик по элементу с id = example-3
-            // загрузку XML из файла example.xml
-                $('#example-3').html('');
-                $(xml).find('note').each(function(){       // заполняем DOM элемент данными из XML
-                    $('#example-3').append('To: '   + $(this).find('to').text() + '<br/>')
-                            .append('From: ' + $(this).find('from').text() + '<br/>')
-                            .append('<b>'    + $(this).find('heading').text() + '</b><br/>')
-                            .append(           $(this).find('body').text() + '<br/>');
-                });
-                                                 // указываем явно тип данных
-        })
-    });
-
-
-
-    /*$(document).ready(function() {
-        $.ajax({
-            url: 'registration.jsp',             // указываем URL и
-            dataType: "jsp",                     // тип загружаемых данных
-            success: function (data, textStatus) { // вешаем свой обработчик на функцию success
-                $.each(data, function (i, val) {    // обрабатываем полученные данные
-
-                });
+<script>
+    function createRequest() {
+        var Request = new XMLHttpRequest();
+        if (!Request) {
+            alert("Невозможно создать Request!");
+        }
+        return Request;
+    }
+    function loginRequest() {
+        var Request = createRequest();
+        Request.onreadystatechange = function () {
+            if (Request.readyState == 4) {
+                if (Request.status == 200) {
+                    responseHandler(Request);
+                } else {
+                    alert("Error");
+                }
+            } else {
+                document.getElementById("formDiv").value = "Loading...";
             }
-        });
-    });*/
+        };
+        body = 'name=' + encodeURIComponent(document.getElementById("s_name").value) +
+                '&password=' + encodeURIComponent(document.getElementById("password_id").value) +
+                '&passwordAgain=' + encodeURIComponent(document.getElementById("password_id2").value) +
+                '&city=' + encodeURIComponent(document.getElementById("city_id").value) +
+                '&year=' + encodeURIComponent(document.getElementById("year_id").value);
+        Request.open('POST', '/studentsAddForm', true);
+        Request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        Request.send(body);
+    }
+    function responseHandler(Request) {
+        document.getElementById("formDiv").innerText = Request.responseText;
+    }
 </script>
 
 <p>

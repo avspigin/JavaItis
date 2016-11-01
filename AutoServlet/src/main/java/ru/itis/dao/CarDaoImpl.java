@@ -1,112 +1,96 @@
 package ru.itis.dao;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import ru.itis.models.Cars;
 
-import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Span on 23.10.2016.
  */
 public class CarDaoImpl implements CarDao {
 
-    private Connection connection;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     //language=SQL
-    private static final String SQL_GET_CAR = "SELECT * FROM cars WHERE car_id = ?";
+    private static final String SQL_GET_CAR = "SELECT * FROM cars WHERE car_id = :car_id";
     //language=SQL
     private static final String SQL_GET_ALL_CAR = "SELECT * FROM cars";
     //language=SQL
-    private static final String SQL_UPDATE_CAR = "UPDATE cars SET car_name = ?, " +
-            "mileage = ?, user_id = ? WHERE car_id = ?";
+    private static final String SQL_UPDATE_CAR = "UPDATE cars SET car_name = :car_name, " +
+            "mileage = :mileage, user_id = :user_id WHERE car_id = :car_id";
     //language=SQL
-    private static final String SQL_DELETE_CAR = "DELETE FROM cars WHERE car_id = ?";
+    private static final String SQL_DELETE_CAR = "DELETE FROM cars WHERE car_id = :car_id";
     //language=SQL
-    private static final String SQL_ADD_CAR = "INSERT INTO cars (car_name, mileage, user_id) VALUES (?, ?, ?)";
+    private static final String SQL_ADD_CAR = "INSERT INTO cars (car_name, mileage, user_id) VALUES (:car_name, :mileage, :user_id)";
 
-    public CarDaoImpl(DataSource dataSource) {
-        try {
-            this.connection = dataSource.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public CarDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public Cars getCar(int carId) {
-        try {
+        Map<String, Integer> paramsMap = new HashMap<String, Integer>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_CAR);
-            statement.setInt(1, carId);
-            ResultSet result = statement.executeQuery();
-            result.next();
-            return new Cars(result.getInt("car_id"), result.getString("car_name"),
-                    result.getInt("mileage"), result.getInt("user_id"));
+        paramsMap.put("car_id", carId);
 
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        return namedParameterJdbcTemplate.queryForObject(SQL_GET_CAR, paramsMap, new RowMapper<Cars>() {
+
+            public Cars mapRow(ResultSet resultSet, int i) throws SQLException {
+
+                return new Cars(resultSet.getInt("car_id"),
+                        resultSet.getString("car_name"),
+                        resultSet.getInt("mileage"),
+                        resultSet.getInt("user_id"));
+            }
+
+        });
     }
 
     public List<Cars> getAllCars() {
-        List<Cars> list = new ArrayList<Cars>();
-        try {
 
-            PreparedStatement statement = connection.prepareStatement(SQL_GET_ALL_CAR);
+        return namedParameterJdbcTemplate.query(SQL_GET_ALL_CAR, new RowMapper<Cars>() {
 
-            ResultSet result = statement.executeQuery();
-//            result.next();
-            while (result.next()) {
-                list.add(new Cars(result.getInt("car_id"), result.getString("car_name"),
-                        result.getInt("mileage"), result.getInt("user_id")));
+            public Cars mapRow(ResultSet resultSet, int i) throws SQLException {
+
+                return new Cars(resultSet.getInt("car_id"),
+                        resultSet.getString("car_name"),
+                        resultSet.getInt("mileage"),
+                        resultSet.getInt("user_id"));
             }
 
-            return list;
-
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        });
     }
 
     public void addCar(Cars car) {
-        try {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_ADD_CAR);
-            statement.setString(1, car.getCarName());
-            statement.setInt(2, car.getCarMileage());
-            statement.setInt(3, car.getUserId());
-            statement.execute();
+        paramsMap.put("car_name", car.getCarName());
+        paramsMap.put("mileage", car.getCarMileage());
+        paramsMap.put("user_id", car.getUserId());
 
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        namedParameterJdbcTemplate.update(SQL_ADD_CAR, paramsMap);
     }
 
     public void updateCar(Cars car) {
-        try {
+        Map<String, Object> paramsMap = new HashMap<String, Object>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_CAR);
-            statement.setInt(4, car.getCarId());
-            statement.setString(1, car.getCarName());
-            statement.setInt(2, car.getCarMileage());
-            statement.setInt(3, car.getUserId());
-            statement.execute();
+        paramsMap.put("car_name", car.getCarName());
+        paramsMap.put("mileage", car.getCarMileage());
+        paramsMap.put("user_id", car.getUserId());
+        paramsMap.put("car_id", car.getCarId());
 
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        namedParameterJdbcTemplate.update(SQL_UPDATE_CAR, paramsMap);
     }
 
     public void deleteCar(int carId) {
-        try {
+        Map<String, Integer> paramsMap = new HashMap<String, Integer>();
 
-            PreparedStatement statement = connection.prepareStatement(SQL_DELETE_CAR);
-            statement.setInt(1, carId);
-            statement.execute();
+        paramsMap.put("car_id", carId);
 
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        namedParameterJdbcTemplate.update(SQL_DELETE_CAR, paramsMap);
     }
 }
