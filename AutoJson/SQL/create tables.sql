@@ -2,7 +2,8 @@ create table owners (
     user_id serial primary key,
     user_login varchar(50) unique not null,
     user_password varchar(50) not null,
-    userFio varchar(50) not null,
+    fio varchar(50) not null,
+    age INTEGER NULL,
     token varchar(50) null
 )
     

@@ -1,5 +1,6 @@
 package ru.itis.dao;
 
+import ru.itis.models.Cars;
 import ru.itis.models.Owners;
 
 import java.util.List;
@@ -10,8 +11,10 @@ import java.util.List;
 public interface OwnerDao {
     void setToken(Owners owners);
     Owners getOwner(int userId);
+    Owners findByAge(int age);
     List<Owners> getAllOwners();
     void addOwner(Owners owner);
     void updateOwner(Owners owner);
     void deleteOwner(int userId);
+    List<Cars> getCarsOfOwner(int userId);
 }

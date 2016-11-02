@@ -10,27 +10,31 @@ public class Owners {
     private String userLogin;
     private String userPassword;
     private String userFio;
+    private int age;
     private String token;
 
-    public Owners(int userId, String userLogin, String userPassword, String userFio, String token) {
+    public Owners(int userId, String userLogin, String userPassword, String userFio, int age, String token) {
         this.userId = userId;
         this.userLogin = userLogin;
         this.userPassword = userPassword;
         this.userFio = userFio;
+        this.age = age;
         this.token = token;
     }
 
-    public Owners(int userId, String userLogin, String userPassword, String userFio) {
+    public Owners(int userId, String userLogin, String userPassword, String userFio, int age) {
         this.userId = userId;
         this.userLogin = userLogin;
         this.userPassword = userPassword;
         this.userFio = userFio;
+        this.age = age;
     }
 
-    public Owners(String userLogin, String userPassword, String userFio) {
+    public Owners(String userLogin, String userPassword, String userFio, int age) {
         this.userLogin = userLogin;
         this.userPassword = userPassword;
         this.userFio = userFio;
+        this.age = age;
     }
 
     public int getUserId() {
@@ -65,6 +69,14 @@ public class Owners {
         this.userFio = userFio;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public String getToken() {
         return token;
     }
@@ -79,6 +91,7 @@ public class Owners {
                 .add(" User Id", this.userId)
                 .add(" User login", this.userLogin)
                 .add(" FIO", this.userFio)
+                .add(" Age", this.age)
                 .toString();
 
     }

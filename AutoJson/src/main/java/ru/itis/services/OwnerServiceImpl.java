@@ -1,6 +1,8 @@
 package ru.itis.services;
 
+import ru.itis.dao.CarDao;
 import ru.itis.dao.OwnerDao;
+import ru.itis.models.Cars;
 import ru.itis.models.Owners;
 
 import java.util.List;
@@ -11,16 +13,20 @@ import java.util.List;
 public class OwnerServiceImpl implements OwnerService {
     OwnerDao ownerDao;
 
-    public void setToken(Owners owner){
-        this.ownerDao.setToken(owner);
-    }
-
     public OwnerServiceImpl(OwnerDao ownerDao){
         this.ownerDao = ownerDao;
     }
 
+    public void setToken(Owners owner){
+        this.ownerDao.setToken(owner);
+    }
+
     public Owners findUserById(int userId) {
         return ownerDao.getOwner(userId);
+    }
+
+    public Owners findUserByAge(int age){
+        return ownerDao.getOwner(age);
     }
 
     public List<Owners> getAllUsers() {
@@ -37,5 +43,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     public void deleteUser(int userId) {
         this.ownerDao.deleteOwner(userId);
+    }
+
+    public List<Cars> getCarsOfOwner(int userId){
+        return ownerDao.getCarsOfOwner(userId);
     }
 }

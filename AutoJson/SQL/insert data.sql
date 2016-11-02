@@ -1,8 +1,8 @@
-insert into owners (user_login, user_password, userFio) values
-	('vita', 'qwer28', 'Виталий'),
-	('kira', 'qwer18', 'Кирилл'),
-	('ant', 'qwe45', 'Антон'),
-	('evg', 'qw20', 'Евгений');
+insert into owners (user_login, user_password, fio, age) values
+	('vita', 'qwer28', 'Виталий', 24),
+	('kira', 'qwer18', 'Кирилл', 34),
+	('ant', 'qwe45', 'Антон', 29),
+	('evg', 'qw20', 'Евгений', 45);
     
 insert into cars (car_name, mileage, user_id) values
 	('volvo', 45, 1),
