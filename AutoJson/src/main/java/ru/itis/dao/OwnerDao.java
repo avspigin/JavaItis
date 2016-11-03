@@ -11,7 +11,7 @@ import java.util.List;
 public interface OwnerDao {
     void setToken(Owners owners);
     Owners getOwner(int userId);
-    Owners findByAge(int age);
+    List<Owners> findByAge(int age);
     List<Owners> getAllOwners();
     void addOwner(Owners owner);
     void updateOwner(Owners owner);

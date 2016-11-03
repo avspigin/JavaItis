@@ -70,11 +70,11 @@ public class OwnerDaoImpl implements OwnerDao {
         });
     }
 
-    public Owners findByAge(int age) {
+    public List<Owners> findByAge(int age) {
         Map<String, Integer> paramsMap = new HashMap<String, Integer>();
         paramsMap.put("age", age);
 
-        return namedParameterJdbcTemplate.queryForObject(SQL_FIND_BY_AGE, paramsMap, new RowMapper<Owners>(){
+        return namedParameterJdbcTemplate.query(SQL_FIND_BY_AGE, paramsMap, new RowMapper<Owners>(){
 
             public Owners mapRow(ResultSet resultSet, int rowNum) throws SQLException{
 

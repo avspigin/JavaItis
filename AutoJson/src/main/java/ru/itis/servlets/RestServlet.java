@@ -2,28 +2,20 @@ package ru.itis.servlets;
 
         import com.fasterxml.jackson.databind.ObjectMapper;
         import org.springframework.context.ApplicationContext;
-        import org.springframework.context.support.ClassPathXmlApplicationContext;
-        import org.springframework.core.annotation.Order;
-        import ru.itis.converters.ModelConverter;
         import ru.itis.models.Cars;
         import ru.itis.models.Owners;
         import ru.itis.services.CarService;
         import ru.itis.services.OwnerService;
-
         import java.io.IOException;
-        import java.io.PrintWriter;
-
         import java.util.List;
         import java.util.regex.Pattern;
         import java.util.regex.Matcher;
-
         import javax.servlet.ServletConfig;
         import javax.servlet.ServletContext;
         import javax.servlet.ServletException;
         import javax.servlet.http.HttpServlet;
         import javax.servlet.http.HttpServletRequest;
         import javax.servlet.http.HttpServletResponse;
-
         import static ru.itis.converters.ModelConverter.getCarDto;
         import static ru.itis.converters.ModelConverter.getOwnerDto;
 
@@ -32,7 +24,6 @@ public class RestServlet extends HttpServlet {
     private OwnerService ownerService;
     private CarService carService;
     private ObjectMapper objectMapper;
-    private Integer idUsers;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -91,16 +82,17 @@ public class RestServlet extends HttpServlet {
         RestRequest resourceValues = new RestRequest(request.getPathInfo());
         if (resourceValues.isUsers()) {
             if (request.getParameter("age") != null) {
-                Owners owner = ownerService.findUserByAge(Integer.parseInt(request.getParameter("age")));
-                String stringResponse = objectMapper.writeValueAsString(getOwnerDto(owner));
-
-                response.setContentType("application/json");
-                response.getWriter().write(stringResponse + "\n");
+                List<Owners> ownersList = ownerService.findUserByAge(Integer.parseInt(request.getParameter("age")));
+                for (Owners owner: ownersList) {
+                    String stringResponse = objectMapper.writeValueAsString(getOwnerDto(owner));
+                    response.setContentType("application/json; charset=UTF-8");
+                    response.getWriter().write(stringResponse + "\n");
+                }
             } else {
                 List<Owners> listOwners = ownerService.getAllUsers();
                 for (Owners owner : listOwners) {
                     String stringResponse = objectMapper.writeValueAsString(getOwnerDto(owner));
-                    response.setContentType("application/json");
+                    response.setContentType("application/json; charset=UTF-8");
                     response.getWriter().write(stringResponse + "\n");
                 }
             }
@@ -108,7 +100,7 @@ public class RestServlet extends HttpServlet {
             List<Cars> listCars = ownerService.getCarsOfOwner(resourceValues.getIdUsers());
             for (Cars car : listCars) {
                 String stringResponse = objectMapper.writeValueAsString(getCarDto(car));
-                response.setContentType("application/json");
+                response.setContentType("application/json; charset=UTF-8");
                 response.getWriter().write(stringResponse + "\n");
             }
         }
@@ -132,6 +124,9 @@ public class RestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
+
+//        request.setCharacterEncoding("UTF-8");
+
         String name = request.getParameter("name");
         String mileageStr = request.getParameter("mileage");
         if(name != null && mileageStr != null) {

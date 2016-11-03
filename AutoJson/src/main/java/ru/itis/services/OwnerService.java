@@ -11,7 +11,7 @@ import java.util.List;
 public interface OwnerService {
     void setToken(Owners owner);
     Owners findUserById(int userId);
-    Owners findUserByAge(int age);
+    List<Owners> findUserByAge(int age);
     List<Owners> getAllUsers();
     void addUser(Owners owner);
     void updateUser(Owners owner);

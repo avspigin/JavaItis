@@ -25,7 +25,7 @@ public class OwnerServiceImpl implements OwnerService {
         return ownerDao.getOwner(userId);
     }
 
-    public Owners findUserByAge(int age){
+    public List<Owners> findUserByAge(int age){
         return ownerDao.findByAge(age);
     }
 
