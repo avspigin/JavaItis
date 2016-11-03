@@ -24,6 +24,9 @@ package ru.itis.servlets;
         import javax.servlet.http.HttpServletRequest;
         import javax.servlet.http.HttpServletResponse;
 
+        import static ru.itis.converters.ModelConverter.getCarDto;
+        import static ru.itis.converters.ModelConverter.getOwnerDto;
+
 public class RestServlet extends HttpServlet {
 
     private OwnerService ownerService;
@@ -76,16 +79,8 @@ public class RestServlet extends HttpServlet {
             return idUsers;
         }
 
-        public void setIdUsers(Integer idUsers) {
-            this.idUsers = idUsers;
-        }
-
         public boolean isUsers() {
             return users;
-        }
-
-        public void setUsers(boolean users) {
-            this.users = users;
         }
     }
 
@@ -94,18 +89,17 @@ public class RestServlet extends HttpServlet {
             throws ServletException, IOException {
 
         RestRequest resourceValues = new RestRequest(request.getPathInfo());
-        ModelConverter converter = new ModelConverter();
         if (resourceValues.isUsers()) {
             if (request.getParameter("age") != null) {
                 Owners owner = ownerService.findUserByAge(Integer.parseInt(request.getParameter("age")));
-                String stringResponse = objectMapper.writeValueAsString(converter.getOwnerDto(owner));
+                String stringResponse = objectMapper.writeValueAsString(getOwnerDto(owner));
 
                 response.setContentType("application/json");
                 response.getWriter().write(stringResponse + "\n");
             } else {
                 List<Owners> listOwners = ownerService.getAllUsers();
                 for (Owners owner : listOwners) {
-                    String stringResponse = objectMapper.writeValueAsString(converter.getOwnerDto(owner));
+                    String stringResponse = objectMapper.writeValueAsString(getOwnerDto(owner));
                     response.setContentType("application/json");
                     response.getWriter().write(stringResponse + "\n");
                 }
@@ -113,7 +107,7 @@ public class RestServlet extends HttpServlet {
         } else {
             List<Cars> listCars = ownerService.getCarsOfOwner(resourceValues.getIdUsers());
             for (Cars car : listCars) {
-                String stringResponse = objectMapper.writeValueAsString(converter.getCarDto(car));
+                String stringResponse = objectMapper.writeValueAsString(getCarDto(car));
                 response.setContentType("application/json");
                 response.getWriter().write(stringResponse + "\n");
             }

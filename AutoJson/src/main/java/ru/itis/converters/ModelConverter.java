@@ -10,7 +10,7 @@ import ru.itis.models.Owners;
  */
 public class ModelConverter {
 
-    public OwnerDto getOwnerDto(Owners owner){
+    public static OwnerDto getOwnerDto(Owners owner){
         OwnerDto ownerDto = new OwnerDto();
         ownerDto.setUserLogin(owner.getUserLogin());
         ownerDto.setUserFio(owner.getUserFio());
@@ -18,7 +18,7 @@ public class ModelConverter {
         return ownerDto;
     }
 
-     public CarDto getCarDto(Cars car){
+     public static CarDto getCarDto(Cars car){
          CarDto carDto = new CarDto();
          carDto.setCarName(car.getCarName());
          carDto.setCarMileage(car.getCarMileage());
