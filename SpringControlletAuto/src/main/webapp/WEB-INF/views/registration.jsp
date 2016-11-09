@@ -9,9 +9,9 @@
 <body>
 <h2>Регистрация</h2>
 
-<script src="../../scripts/windowError.js"></script>
+<script src="scripts/windowError.js"></script>
 
-<form method="post" name="Form">
+<form action="registration" method="POST" name="Form">
     <table border="0">
     <tr>
         <td>Login: </td><td><input type="text" name="login"></td>

@@ -4,27 +4,39 @@ package ru.itis;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ru.itis.models.Owners;
+import ru.itis.services.OwnerService;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class RegistrationController {
 
+    private OwnerService ownerService;
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
+    public ModelAndView handleRequest() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("registration");
         return modelAndView;
+    }
 
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public ModelAndView getWelcome(@RequestParam("login") String login,
+                                      @RequestParam("password") String password,
+                                      @RequestParam("fio") String fio) {
 
-        if( request.getMethod().equals("POST")){
+        ModelAndView modelAndView = new ModelAndView();
+
+        if (login.equals("") || password.equals("") || fio.equals("")){
             modelAndView.setViewName("registration");
-            return modelAndView;
+        } else {
+            ownerService.addUser(new Owners(login, password, fio));
+            modelAndView.setViewName("login");
         }
 
+        return modelAndView;
     }
 }
