@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class LoginFilter implements Filter{
 
+
     private OwnerService ownerService;
     private boolean cookieTrue = false;
 

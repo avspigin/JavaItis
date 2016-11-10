@@ -3,6 +3,7 @@ package ru.itis.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.dao.OwnerDao;
+import ru.itis.models.Cars;
 import ru.itis.models.Owners;
 
 import java.util.List;
@@ -17,12 +18,12 @@ public class OwnerServiceImpl implements OwnerService {
         this.ownerDao.setToken(owner);
     }
 
-    public OwnerServiceImpl(OwnerDao ownerDao){
-        this.ownerDao = ownerDao;
-    }
-
     public Owners findUserById(int userId) {
         return ownerDao.getOwner(userId);
+    }
+
+    public List<Owners> findUserByAge(int age){
+        return ownerDao.findByAge(age);
     }
 
     public List<Owners> getAllUsers() {
@@ -39,5 +40,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     public void deleteUser(int userId) {
         this.ownerDao.deleteOwner(userId);
+    }
+
+    public List<Cars> getCarsOfOwner(int userId){
+        return ownerDao.getCarsOfOwner(userId);
     }
 }

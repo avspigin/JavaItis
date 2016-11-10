@@ -13,14 +13,18 @@
 
 <form action="registration" method="POST" name="Form">
     <table border="0">
-    <tr>
-        <td>Login: </td><td><input type="text" name="login"></td>
-    </tr>
-    <tr>
-        <td>Password: </td><td><input type="password" name="password"></td>
-    </tr>
-    <tr>
-        <td>FIO: </td><td><input type="text" name="fio"></td>
+        <tr>
+            <td>Login: </td><td><input type="text" name="login"></td>
+        </tr>
+        <tr>
+            <td>Password: </td><td><input type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td>FIO: </td><td><input type="text" name="fio"></td>
+        </tr>
+        <tr>
+            <td>age: </td><td><input type="text" name="age"></td>
+        </tr>
     </table>
     <br>
     <input type="submit" value="Registration" onclick="validateFormRegistration()">

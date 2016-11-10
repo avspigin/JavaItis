@@ -1,10 +1,4 @@
-<%@ page import="java.util.Iterator" %><%--
-  Created by IntelliJ IDEA.
-  User: Span
-  Date: 24.10.2016
-  Time: 13:00
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -18,6 +12,7 @@
         <th>User Id</th>
         <th>User Login</th>
         <th>User FIO</th>
+        <th>Age</th>
         <th>Car Model</th>
         <th>Mileage</th>
     </tr>
@@ -27,6 +22,7 @@
         <td><c:out value="${currentUser.userId}" /></td>
         <td><c:out value="${currentUser.userLogin}" /></td>
         <td><c:out value="${currentUser.userFio}" /></td>
+        <td><c:out value="${currentUser.age}" /></td>
         <c:forEach items="${requestScope.carsForJsp}" var="currentCar">
             <c:if test="${currentUser.userId == currentCar.userId}">
                 <td><c:out value="${currentCar.carName}" /></td>

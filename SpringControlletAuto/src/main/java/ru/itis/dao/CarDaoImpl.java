@@ -12,9 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Span on 23.10.2016.
- */
 @Repository
 public class CarDaoImpl implements CarDao {
 
@@ -31,6 +28,7 @@ public class CarDaoImpl implements CarDao {
     private static final String SQL_DELETE_CAR = "DELETE FROM cars WHERE car_id = :car_id";
     //language=SQL
     private static final String SQL_ADD_CAR = "INSERT INTO cars (car_name, mileage, user_id) VALUES (:car_name, :mileage, :user_id)";
+
 
     @Autowired
     public CarDaoImpl(DataSource dataSource) {

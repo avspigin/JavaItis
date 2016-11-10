@@ -74,6 +74,7 @@
         <th>User Id</th>
         <th>User Login</th>
         <th>User FIO</th>
+        <th>Age</th>
         <th>Car Model</th>
         <th>Mileage</th>
     </tr>
@@ -83,6 +84,7 @@
         <td><c:out value="${requestScope.owner.userId}" /></td>
         <td><c:out value="${requestScope.owner.userLogin}" /></td>
         <td><c:out value="${requestScope.owner.userFio}" /></td>
+        <td><c:out value="${requestScope.owner.age}" /></td>
         <c:forEach items="${requestScope.carsForJsp}" var="currentCar">
             <c:if test="${requestScope.owner.userId == currentCar.userId}">
                 <td><c:out value="${currentCar.carName}" /></td>

@@ -26,17 +26,19 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView getWelcome(@RequestParam("login") String login,
-                                      @RequestParam("password") String password,
-                                      @RequestParam("fio") String fio) {
+    public ModelAndView getRegistration(@RequestParam("login") String login,
+                                   @RequestParam("password") String password,
+                                   @RequestParam("fio") String fio,
+                                   @RequestParam("age") String age) {
 
         ModelAndView modelAndView = new ModelAndView();
 
-        if (login.equals("") || password.equals("") || fio.equals("")){
+        if (login.equals("") || password.equals("") || fio.equals("") || age.equals("")){
             modelAndView.setViewName("registration");
         } else {
-            ownerService.addUser(new Owners(login, password, fio));
-            modelAndView.setViewName("login");
+            int ageInt = Integer.parseInt(age);
+            ownerService.addUser(new Owners(login, password, fio, ageInt));
+            modelAndView.setViewName("redirect:/login");
         }
 
         return modelAndView;

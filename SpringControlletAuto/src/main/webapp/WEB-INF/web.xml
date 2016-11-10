@@ -23,9 +23,15 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!--<filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>ru.itis.filters.LoginFilter</filter-class>
+    </filter>
 
-
-
-
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/addAuto</url-pattern>
+        <url-pattern>/list</url-pattern>
+    </filter-mapping>-->
 
 </web-app>
