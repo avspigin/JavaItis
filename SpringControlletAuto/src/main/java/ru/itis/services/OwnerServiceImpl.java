@@ -1,5 +1,6 @@
 package ru.itis.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.dao.OwnerDao;
 import ru.itis.models.Owners;
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Service
 public class OwnerServiceImpl implements OwnerService {
+
+    @Autowired
     OwnerDao ownerDao;
 
     public void setToken(Owners owner){

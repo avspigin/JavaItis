@@ -1,9 +1,12 @@
 package ru.itis.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.itis.models.Cars;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Map;
 /**
  * Created by Span on 23.10.2016.
  */
+@Repository
 public class CarDaoImpl implements CarDao {
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -28,8 +32,9 @@ public class CarDaoImpl implements CarDao {
     //language=SQL
     private static final String SQL_ADD_CAR = "INSERT INTO cars (car_name, mileage, user_id) VALUES (:car_name, :mileage, :user_id)";
 
-    public CarDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    @Autowired
+    public CarDaoImpl(DataSource dataSource) {
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public Cars getCar(int carId) {

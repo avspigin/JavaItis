@@ -1,10 +1,13 @@
 package ru.itis.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.itis.models.Owners;
 import ru.itis.utils.PasswordCache;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +16,9 @@ import java.util.Map;
 /**
  * Created by Span on 23.10.2016.
  */
+@Repository
 public class OwnerDaoImpl implements OwnerDao {
+
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 //    Owners owner;
@@ -32,8 +37,9 @@ public class OwnerDaoImpl implements OwnerDao {
     //language=SQL
     private static final String SQL_SET_TOKEN = "UPDATE owners SET token = :token WHERE user_id = :user_id";
 
-    public OwnerDaoImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate){
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    @Autowired
+    public OwnerDaoImpl(DataSource dataSource){
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     public void setToken(Owners owner){

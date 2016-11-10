@@ -1,6 +1,7 @@
-package ru.itis;
+package ru.itis.controllers;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import ru.itis.services.OwnerService;
 @Controller
 public class RegistrationController {
 
+    @Autowired
     private OwnerService ownerService;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)

@@ -1,5 +1,6 @@
 package ru.itis.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.dao.CarDao;
 import ru.itis.models.Cars;
@@ -10,6 +11,8 @@ import java.util.List;
 @Service
 public class CarServiceImpl implements CarService {
     private CarDao carDao;
+
+    @Autowired
 
     public CarServiceImpl(CarDao carDao) {
         this.carDao = carDao;
