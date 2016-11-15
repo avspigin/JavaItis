@@ -30,15 +30,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return dataSource;
     }
 
-    @Bean
-    public ViewResolver configureViewResolver() {
-        InternalResourceViewResolver viewResolve = new InternalResourceViewResolver();
-        viewResolve.setPrefix("/WEB-INF/views/");
-        viewResolve.setSuffix(".jsp");
-
-        return viewResolve;
-    }
-
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer){
         configurer.enable();
